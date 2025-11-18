@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberMentor - Pitch Deck 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a202c;
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .slide-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px 50px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .slide-header h2 {
+            font-size: 52px;
+            color: white;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .slide-header p {
+            font-size: 26px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px 50px;
+            overflow-y: auto;
+            color: white;
+            font-size: 18px;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #60a5fa;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h3 {
+            color: #60a5fa;
+            font-size: 26px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .card p, .card li {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            padding: 35px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .highlight-box h3 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: #60a5fa;
+        }
+
+        .highlight-box p {
+            font-size: 20px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-value {
+            font-size: 56px;
+            font-weight: 800;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        th, td {
+            padding: 18px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th {
+            background: rgba(96, 165, 250, 0.3);
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.15);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.15);
+            border-left: 4px solid #22c55e;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: rgba(249, 115, 22, 0.15);
+            border-left: 4px solid #f97316;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-left: 0;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button {
+            background: rgba(96, 165, 250, 0.3);
+            color: white;
+            border: 2px solid #60a5fa;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: #60a5fa;
+            transform: scale(1.05);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 0 20px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #60a5fa;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .title-slide h1 {
+            font-size: 84px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .title-slide p {
+            font-size: 32px;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .title-slide .subtitle {
+            font-size: 22px;
+            opacity: 0.8;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 0 - Título -->
+        <div class="slide active title-slide">
+            <div style="font-size: 80px; margin-bottom: 20px;">🛡️</div>
+            <h1>CyberMentor</h1>
+            <p>Democratizando a Cibersegurança no Brasil</p>
+            <p class="subtitle">Pitch Deck 2025</p>
+        </div>
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>76% das Empresas Brasileiras</h2>
+                <p>sofrem com falta de profissionais qualificados em cibersegurança</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <div style="font-size: 72px; font-weight: 800; margin-bottom: 20px; color: #ef4444;">76%</div>
+                    <p style="font-size: 24px;">O custo médio de um ataque cibernético para pequenas empresas no Brasil é de <strong style="color: #ef4444;">R$ 180 mil</strong></p>
+                </div>
+                <div class="warning-box">
+                    <p style="font-size: 20px; font-weight: 600;">
+                        Enquanto isso, menos de 15% dos profissionais de TI possuem formação específica em segurança digital
+                    </p>
+                </div>
+                <p style="text-align: center; font-size: 22px; font-style: italic; margin-top: 30px; opacity: 0.9;">
+                    E se existisse uma forma acessível de transformar essa realidade?
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>O Problema é Real e Crescente</h2>
+                <p>Um mercado desprotegido e despreparado</p>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="margin-bottom: 25px;">
+                    <div class="card" style="border-left-color: #ef4444;">
+                        <h3 style="color: #ef4444;">❌ Quem Sofre?</h3>
+                        <ul>
+                            <li>Pequenas e médias empresas sem orçamento</li>
+                            <li>Estudantes sem acesso a educação de qualidade</li>
+                            <li>Profissionais buscando transição de carreira</li>
+                            <li>Comunidades vulneráveis digitalmente</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left-color: #f97316;">
+                        <h3 style="color: #f97316;">⚠️ Consequências</h3>
+                        <ul>
+                            <li>💸 Perda média de R$ 180k por ataque</li>
+                            <li>⏰ 6 meses para recuperação completa</li>
+                            <li>📉 40% das PMEs fecham após incidentes graves</li>
+                            <li>🚫 Exclusão digital e profissional</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <h3 style="margin-bottom: 20px; color: #fbbf24;">Soluções Atuais São Insuficientes</h3>
+                    <div class="grid-3">
+                        <div class="metric">
+                            <div class="metric-value" style="color: #fbbf24;">R$ 8-15k</div>
+                            <div class="metric-label">Cursos tradicionais</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" style="color: #fbbf24;">70%</div>
+                            <div class="metric-label">Conteúdo desatualizado</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" style="color: #fbbf24;">Zero</div>
+                            <div class="metric-label">Prática real</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CyberMentor: Democratizando a Cibersegurança</h2>
+                <p>Educação prática, acessível e transformadora</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box" style="margin-bottom: 25px;">
+                    <p style="font-size: 20px; text-align: center;">
+                        Somos a <strong>primeira plataforma brasileira</strong> que combina educação em cibersegurança de alta qualidade com <strong>acesso democrático</strong> e <strong>impacto social mensurável</strong>.
+                    </p>
+                </div>
+                <div class="grid-3" style="margin-bottom: 25px;">
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🎓</div>
+                        <h3 style="color: #3b82f6;">Educação Prática</h3>
+                        <p>Laboratórios hands-on com cenários reais de ataques e defesas</p>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <h3 style="color: #22c55e;">💰 Preço Acessível</h3>
+                        <div style="font-size: 48px; margin-bottom: 15px;">💰</div>
+                        <p>A partir de R$ 15/mês - 95% mais barato que cursos tradicionais</p>
+                    </div>
+                    <div class="card" style="border-left-color: #a855f7;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🤝</div>
+                        <h3 style="color: #a855f7;">Impacto Social</h3>
+                        <p>Modelo híbrido: lucrativo e com missão de inclusão digital</p>
+                    </div>
+                </div>
+                <div class="success-box">
+                    <h3 style="margin-bottom: 15px; color: #22c55e;">✅ Nosso Diferencial Único</h3>
+                    <div class="grid-2">
+                        <p>✓ <strong>Laboratórios Gamificados</strong> - Aprenda invadindo e defendendo</p>
+                        <p>✓ <strong>Mentoria Coletiva</strong> - Comunidade ativa</p>
+                        <p>✓ <strong>Certificações Reconhecidas</strong> - CEH, OSCP, CompTIA</p>
+                        <p>✓ <strong>Conteúdo Atualizado</strong> - Novas ameaças mensalmente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Uma Oportunidade de R$ 2,8 Bilhões</h2>
+                <p>Mercado em expansão explosiva</p>
+            </div>
+            <div class="slide-content">
+                <div class="grid-3" style="margin-bottom: 25px;">
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));">
+                        <div style="font-size: 14px; margin-bottom: 10px; opacity: 0.9;">TAM - Mercado Total</div>
+                        <div style="font-size: 48px; font-weight: 800; margin-bottom: 10px; color: #60a5fa;">R$ 2,8bi</div>
+                        <p style="font-size: 13px; opacity: 0.8; color: rgba(255,255,255,0.9);">Educação em cibersegurança no Brasil (2025)</p>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3));">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🤝</div>
+                        <p style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">Parcerias</p>
+                        <p style="font-size: 11px; opacity: 0.8; margin-bottom: 12px;">Universidades</p>
+                        <p style="font-size: 24px; font-weight: 800; color: #4ade80;">25%</p>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(147, 51, 234, 0.3));">
+                        <div style="font-size: 32px; margin-bottom: 10px;">💼</div>
+                        <p style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">Vendas B2B</p>
+                        <p style="font-size: 11px; opacity: 0.8; margin-bottom: 12px;">Outbound PMEs</p>
+                        <p style="font-size: 24px; font-weight: 800; color: #c084fc;">20%</p>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(234, 88, 12, 0.3));">
+                        <div style="font-size: 32px; margin-bottom: 10px;">👥</div>
+                        <p style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">Comunidade</p>
+                        <p style="font-size: 11px; opacity: 0.8; margin-bottom: 12px;">Orgânico</p>
+                        <p style="font-size: 24px; font-weight: 800; color: #fb923c;">15%</p>
+                    </div>
+                </div>
+                <div class="grid-3">
+                    <div class="info-box">
+                        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 5px;">CAC Médio</p>
+                        <p style="font-size: 32px; font-weight: 800; color: #60a5fa;">R$ 85</p>
+                        <p style="font-size: 11px; opacity: 0.7;">70% abaixo da média</p>
+                    </div>
+                    <div class="success-box">
+                        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 5px;">LTV</p>
+                        <p style="font-size: 32px; font-weight: 800; color: #4ade80;">R$ 1.280</p>
+                        <p style="font-size: 11px; opacity: 0.7;">Retenção 8 meses</p>
+                    </div>
+                    <div class="warning-box">
+                        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 5px;">LTV/CAC Ratio</p>
+                        <p style="font-size: 32px; font-weight: 800; color: #c084fc;">15:1</p>
+                        <p style="font-size: 11px; opacity: 0.7;">Excelente economics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Posicionamento Competitivo</h2>
+                <p>Vantagem clara em preço, qualidade e impacto</p>
+            </div>
+            <div class="slide-content">
+                <table style="margin-bottom: 25px;">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th style="text-align: center;">CyberMentor 🚀</th>
+                            <th style="text-align: center;">Tradicionais</th>
+                            <th style="text-align: center;">Internacionais</th>
+                            <th style="text-align: center;">Bootcamps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">Preço</td>
+                            <td style="text-align: center; background: rgba(34, 197, 94, 0.2);"><strong style="color: #4ade80;">R$ 160/mês</strong><br><span style="font-size: 11px;">✓ Acessível</span></td>
+                            <td style="text-align: center;"><span>R$ 8-15k</span><br><span style="font-size: 11px; color: #ef4444;">✗ Caro</span></td>
+                            <td style="text-align: center;"><span>US$ 200-500</span><br><span style="font-size: 11px;">~ Em dólar</span></td>
+                            <td style="text-align: center;"><span>R$ 12-25k</span><br><span style="font-size: 11px; color: #ef4444;">✗ Muito caro</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Labs Práticos</td>
+                            <td style="text-align: center; background: rgba(59, 130, 246, 0.2);"><strong>✓✓✓</strong><br><span style="font-size: 11px; color: #60a5fa;">Gamificados</span></td>
+                            <td style="text-align: center;"><strong>✓</strong><br><span style="font-size: 11px;">Limitado</span></td>
+                            <td style="text-align: center;"><strong>✓✓</strong><br><span style="font-size: 11px;">Bom</span></td>
+                            <td style="text-align: center;"><strong>✓✓</strong><br><span style="font-size: 11px;">Intensivo</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Impacto Social</td>
+                            <td style="text-align: center; background: rgba(34, 197, 94, 0.2);"><strong>✓✓✓</strong><br><span style="font-size: 11px; color: #4ade80; font-weight: 600;">DNA</span></td>
+                            <td style="text-align: center;"><strong>✗</strong><br><span style="font-size: 11px;">Não</span></td>
+                            <td style="text-align: center;"><strong>✗</strong><br><span style="font-size: 11px;">Não</span></td>
+                            <td style="text-align: center;"><strong>~</strong><br><span style="font-size: 11px;">Mínimo</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box">
+                    <h3 style="margin-bottom: 15px;">🎯 Nosso Diferencial</h3>
+                    <p style="font-size: 18px; line-height: 1.6;">
+                        <strong style="text-decoration: underline;">Única plataforma brasileira</strong> que combina <strong>preço acessível + qualidade internacional + impacto social + laboratórios gamificados</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Time Fundador</h2>
+                <p>Experiência complementar e paixão pelo propósito</p>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="margin-bottom: 25px;">
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800;">CF</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #60a5fa;">Fundador & CEO</h3>
+                                <p style="font-size: 12px; opacity: 0.8;">Coordenação & Estratégia</p>
+                            </div>
+                        </div>
+                        <p style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">💼 Experiência</p>
+                        <p style="font-size: 13px; margin-bottom: 5px;">• Segurança da informação</p>
+                        <p style="font-size: 13px; margin-bottom: 5px;">• Consultoria e treinamentos</p>
+                        <p style="font-size: 13px; margin-bottom: 12px;">• Desenvolvimento de conteúdo</p>
+                        <p style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">🎯 Competências</p>
+                        <p style="font-size: 13px;">Gestão • Networking • Visão de negócios</p>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+                            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800;">DT</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #4ade80;">Co-Fundador & CTO</h3>
+                                <p style="font-size: 12px; opacity: 0.8;">Desenvolvimento & Produto</p>
+                            </div>
+                        </div>
+                        <p style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">💼 Experiência</p>
+                        <p style="font-size: 13px; margin-bottom: 5px;">• Desenvolvimento full-stack</p>
+                        <p style="font-size: 13px; margin-bottom: 5px;">• Infraestrutura e segurança</p>
+                        <p style="font-size: 13px; margin-bottom: 12px;">• Arquitetura de plataformas</p>
+                        <p style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">🎯 Competências</p>
+                        <p style="font-size: 13px;">Labs práticos • UX/UI • DevOps</p>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <h3 style="margin-bottom: 15px; color: #fb923c;">👥 Time Complementar</h3>
+                    <div class="grid-2">
+                        <div>
+                            <p style="font-size: 13px; margin-bottom: 5px;">✓ Visão estratégica + Execução técnica</p>
+                            <p style="font-size: 13px; margin-bottom: 5px;">✓ Networking + Expertise em produto</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 13px; margin-bottom: 5px;">✓ Full-time dedicados</p>
+                            <p style="font-size: 13px; margin-bottom: 5px;">✓ Paixão por educação e impacto</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.2));">
+                    <p style="font-size: 18px; font-weight: 600;">
+                        🧠 "Não estamos apenas construindo uma empresa. Estamos criando um movimento para democratizar a cibersegurança no Brasil."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>O Investimento</h2>
+                <p>R$ 45.100 para atingir break-even em 12 meses</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="padding: 40px; margin-bottom: 25px;">
+                    <p style="font-size: 16px; margin-bottom: 10px; opacity: 0.9;">Estamos Buscando</p>
+                    <p style="font-size: 56px; font-weight: 800; margin-bottom: 10px; color: #4ade80;">R$ 45.100</p>
+                    <p style="font-size: 18px; opacity: 0.9;">Rodada Seed • 15% da empresa</p>
+                </div>
+                <div class="grid-2" style="margin-bottom: 25px;">
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <h3 style="margin-bottom: 20px; color: #60a5fa;">💰 Uso dos Recursos</h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="font-size: 13px;">Capital de Giro (6 meses)</span>
+                            <strong style="font-size: 14px;">R$ 25.000</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="font-size: 13px;">Equipamentos</span>
+                            <strong style="font-size: 14px;">R$ 10.000</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="font-size: 13px;">Marketing</span>
+                            <strong style="font-size: 14px;">R$ 4.000</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span style="font-size: 13px;">Aluguel</span>
+                            <strong style="font-size: 14px;">R$ 3.600</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 10px;">
+                            <span style="font-size: 14px; font-weight: 700; color: #60a5fa;">TOTAL</span>
+                            <strong style="font-size: 16px; color: #60a5fa;">R$ 45.100</strong>
+                        </div>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <h3 style="margin-bottom: 20px; color: #4ade80;">📊 Projeções</h3>
+                        <div class="success-box" style="margin-bottom: 12px; padding: 15px;">
+                            <p style="font-size: 12px; opacity: 0.8; margin-bottom: 5px;">Break-even</p>
+                            <p style="font-size: 32px; font-weight: 800; color: #4ade80;">12 meses</p>
+                        </div>
+                        <div class="info-box" style="margin-bottom: 12px; padding: 15px;">
+                            <p style="font-size: 12px; opacity: 0.8; margin-bottom: 5px;">Receita Ano 2</p>
+                            <p style="font-size: 32px; font-weight: 800; color: #60a5fa;">R$ 280k</p>
+                        </div>
+                        <div class="warning-box" style="padding: 15px;">
+                            <p style="font-size: 12px; opacity: 0.8; margin-bottom: 5px;">ROI Projetado</p>
+                            <p style="font-size: 32px; font-weight: 800; color: #c084fc;">30 meses</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h3 style="margin-bottom: 15px; text-align: center; color: #60a5fa;">🎯 Milestones</h3>
+                    <div class="grid-4" style="text-align: center;">
+                        <div>
+                            <div style="background: rgba(59, 130, 246, 0.3); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 20px; font-weight: 800;">3</div>
+                            <p style="font-size: 11px; font-weight: 600;">Mês 3</p>
+                            <p style="font-size: 11px; opacity: 0.7;">200 alunos</p>
+                        </div>
+                        <div>
+                            <div style="background: rgba(34, 197, 94, 0.3); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 20px; font-weight: 800;">6</div>
+                            <p style="font-size: 11px; font-weight: 600;">Mês 6</p>
+                            <p style="font-size: 11px; opacity: 0.7;">3 clientes B2B</p>
+                        </div>
+                        <div>
+                            <div style="background: rgba(168, 85, 247, 0.3); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 20px; font-weight: 800;">9</div>
+                            <p style="font-size: 11px; font-weight: 600;">Mês 9</p>
+                            <p style="font-size: 11px; opacity: 0.7;">R$ 25k MRR</p>
+                        </div>
+                        <div>
+                            <div style="background: rgba(249, 115, 22, 0.3); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 20px; font-weight: 800;">12</div>
+                            <p style="font-size: 11px; font-weight: 600;">Mês 12</p>
+                            <p style="font-size: 11px; opacity: 0.7;">Break-even</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11 - Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Junte-se a Nós Nessa Missão</h2>
+                <p>Transformando a cibersegurança brasileira</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="padding: 35px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3)); margin-bottom: 25px;">
+                    <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 15px; color: #60a5fa;">A Oportunidade é Agora</h2>
+                    <p style="font-size: 20px; line-height: 1.6;">
+                        Investir na CyberMentor é apostar em um mercado bilionário, com retorno sólido e impacto social transformador.
+                    </p>
+                </div>
+                <div class="grid-3" style="margin-bottom: 25px;">
+                    <div class="card" style="text-align: center; border-left: none; border-top: 4px solid #22c55e;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">💰</div>
+                        <p style="font-size: 32px; font-weight: 800; color: #4ade80; margin-bottom: 8px;">R$ 2,8bi</p>
+                        <p style="font-size: 13px;">Mercado endereçável</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-left: none; border-top: 4px solid #3b82f6;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">🎓</div>
+                        <p style="font-size: 32px; font-weight: 800; color: #60a5fa; margin-bottom: 8px;">10.000+</p>
+                        <p style="font-size: 13px;">Alunos impactados (3 anos)</p>
+                    </div>
+                    <div class="card" style="text-align: center; border-left: none; border-top: 4px solid #a855f7;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">🚀</div>
+                        <p style="font-size: 32px; font-weight: 800; color: #c084fc; margin-bottom: 8px;">5-8x</p>
+                        <p style="font-size: 13px;">Múltiplo esperado</p>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <h3 style="text-align: center; margin-bottom: 20px; font-size: 20px; color: #fb923c;">📋 Resumo Executivo</h3>
+                    <div class="grid-2">
+                        <p style="font-size: 13px;"><strong>🎯 Problema:</strong> 76% das empresas sem profissionais</p>
+                        <p style="font-size: 13px;"><strong>✨ Solução:</strong> Plataforma acessível e gamificada</p>
+                        <p style="font-size: 13px;"><strong>📊 Mercado:</strong> TAM R$ 2,8bi • SAM R$ 840mi</p>
+                        <p style="font-size: 13px;"><strong>💵 Modelo:</strong> Assinaturas + B2B + Editais</p>
+                        <p style="font-size: 13px;"><strong>🎯 Tração:</strong> 200+ pesquisas • 50+ waitlist</p>
+                        <p style="font-size: 13px;"><strong>💰 Ask:</strong> R$ 45k por 15% • Break-even 12 meses</p>
+                    </div>
+                </div>
+                <div class="success-box" style="padding: 30px; text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));">
+                    <p style="font-size: 22px; font-weight: 700; margin-bottom: 20px; color: #4ade80;">
+                        💡 "Juntos, vamos revolucionar a educação em cibersegurança no Brasil"
+                    </p>
+                    <p style="font-size: 20px; font-weight: 600; margin-bottom: 10px;">Obrigado!</p>
+                    <p style="font-size: 16px;">Ficamos felizes em responder suas perguntas</p>
+                </div>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="info-box" style="text-align: center; padding: 15px;">
+                        <p style="font-weight: 600; font-size: 13px; margin-bottom: 5px;">📧 Email</p>
+                        <p style="font-size: 12px;">contato@cybermentor.com.br</p>
+                    </div>
+                    <div class="success-box" style="text-align: center; padding: 15px;">
+                        <p style="font-weight: 600; font-size: 13px; margin-bottom: 5px;">🌐 Website</p>
+                        <p style="font-size: 12px;">www.cybermentor.com.br</p>
+                    </div>
+                    <div class="warning-box" style="text-align: center; padding: 15px;">
+                        <p style="font-weight: 600; font-size: 13px; margin-bottom: 5px;">📱 LinkedIn</p>
+                        <p style="font-size: 12px;">/company/cybermentor-br</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+        </div>
+        <div class="dots" id="dotsContainer"></div>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Create dots
+        const dotsContainer = document.getElementById('dotsContainer');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+
+            // Update counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            updateSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        document.getElementById('totalSlides').textContent = totalSlides;
+        updateSlide();
+    </script>
+</body>
+</html> 163, 74, 0.3));">
+                        <div style="font-size: 14px; margin-bottom: 10px; opacity: 0.9;">SAM - Mercado Acessível</div>
+                        <div style="font-size: 48px; font-weight: 800; margin-bottom: 10px; color: #4ade80;">R$ 840mi</div>
+                        <p style="font-size: 13px; opacity: 0.8; color: rgba(255,255,255,0.9);">Educação online + PMEs</p>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(147, 51, 234, 0.3));">
+                        <div style="font-size: 14px; margin-bottom: 10px; opacity: 0.9;">SOM - Nosso Alcance (3 anos)</div>
+                        <div style="font-size: 48px; font-weight: 800; margin-bottom: 10px; color: #c084fc;">R$ 42mi</div>
+                        <p style="font-size: 13px; opacity: 0.8; color: rgba(255,255,255,0.9);">5% do SAM</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h3 style="margin-bottom: 20px; color: #60a5fa;">📈 Drivers de Crescimento</h3>
+                    <div class="grid-2">
+                        <p><strong>📈 28% ao ano</strong> - Mercado global até 2028</p>
+                        <p><strong>🎯 745 mil vagas</strong> - Deficit no Brasil (2024)</p>
+                        <p><strong>🏢 LGPD e compliance</strong> - Obrigatoriedade</p>
+                        <p><strong>💻 Digital acelerada</strong> - Pós-pandemia</p>
+                    </div>
+                </div>
+                <p style="font-size: 11px; opacity: 0.6; margin-top: 20px;">
+                    Fonte: Fortinet Report 2024, IDC Brasil, ISC2 Study
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Modelo de Receita Diversificado</h2>
+                <p>Múltiplas fontes, crescimento sustentável</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box" style="text-align: center; margin-bottom: 25px; padding: 25px;">
+                    <div class="grid-3">
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #60a5fa; margin-bottom: 10px;">MISSÃO</div>
+                            <p style="font-size: 15px;">Democratizar educação em cibersegurança</p>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #a855f7; margin-bottom: 10px;">VISÃO</div>
+                            <p style="font-size: 15px;">Principal plataforma da América Latina até 2028</p>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #22c55e; margin-bottom: 10px;">VALORES</div>
+                            <p style="font-size: 15px;">Acessibilidade • Excelência • Impacto</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-bottom: 25px;">
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #22c55e; font-size: 22px; margin: 0;">Cursos Premium</h3>
+                            <span style="font-size: 32px; font-weight: 800; color: #22c55e;">R$ 3.200</span>
+                        </div>
+                        <p style="font-size: 17px; margin-bottom: 8px;">20 alunos × R$ 160/mês</p>
+                        <p style="font-size: 14px; opacity: 0.7;">Assinatura recorrente • Acesso completo</p>
+                    </div>
+                    <div class="card" style="border-left-color: #3b82f6;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #3b82f6; font-size: 22px; margin: 0;">Treinamentos B2B</h3>
+                            <span style="font-size: 32px; font-weight: 800; color: #3b82f6;">R$ 4.000</span>
+                        </div>
+                        <p style="font-size: 17px; margin-bottom: 8px;">1 empresa × R$ 4.000/mês</p>
+                        <p style="font-size: 14px; opacity: 0.7;">Maior margem • Escalável</p>
+                    </div>
+                    <div class="card" style="border-left-color: #a855f7;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #a855f7; font-size: 22px; margin: 0;">Laboratórios SaaS</h3>
+                            <span style="font-size: 32px; font-weight: 800; color: #a855f7;">R$ 2.000</span>
+                        </div>
+                        <p style="font-size: 17px; margin-bottom: 8px;">50 usuários × R$ 40/mês</p>
+                        <p style="font-size: 14px; opacity: 0.7;">Receita recorrente • Baixo CAC</p>
+                    </div>
+                    <div class="card" style="border-left-color: #f97316;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #f97316; font-size: 22px; margin: 0;">Editais & Royalties</h3>
+                            <span style="font-size: 32px; font-weight: 800; color: #f97316;">R$ 2.800</span>
+                        </div>
+                        <p style="font-size: 17px; margin-bottom: 8px;">Financiamento público + licenciamento</p>
+                        <p style="font-size: 14px; opacity: 0.7;">Diversificação de risco</p>
+                    </div>
+                </div>
+                <div class="highlight-box" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(59, 130, 246, 0.25)); padding: 40px;">
+                    <div style="display: flex; justify-content: space-around; align-items: center;">
+                        <div>
+                            <p style="font-size: 18px; opacity: 0.9; margin-bottom: 8px; font-weight: 600;">Receita Mensal Total</p>
+                            <p style="font-size: 52px; font-weight: 800; color: #4ade80;">R$ 12.900</p>
+                        </div>
+                        <div style="border-left: 2px solid rgba(255,255,255,0.3); height: 80px;"></div>
+                        <div>
+                            <p style="font-size: 18px; opacity: 0.9; margin-bottom: 8px; font-weight: 600;">Projeção Anual (Ano 1)</p>
+                            <p style="font-size: 52px; font-weight: 800; color: #60a5fa;">R$ 154.800</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Validação de Mercado</h2>
+                <p>Tração real e crescimento comprovado</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box" style="margin-bottom: 25px;">
+                    <h3 style="margin-bottom: 20px; color: #60a5fa;">Quem Paga?</h3>
+                    <div class="grid-3">
+                        <div style="text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">👨‍🎓</div>
+                            <p style="font-weight: 600; font-size: 15px;">Estudantes/Profissionais</p>
+                            <p style="font-size: 14px;">R$ 15-160/mês</p>
+                            <p style="font-size: 11px; opacity: 0.7;">55% da receita</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">🏢</div>
+                            <p style="font-weight: 600; font-size: 15px;">Empresas PME</p>
+                            <p style="font-size: 14px;">R$ 4.000/mês</p>
+                            <p style="font-size: 11px; opacity: 0.7;">31% da receita</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">🏛️</div>
+                            <p style="font-weight: 600; font-size: 15px;">Editais Públicos</p>
+                            <p style="font-size: 14px;">R$ 2.000/mês</p>
+                            <p style="font-size: 11px; opacity: 0.7;">14% da receita</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="success-box">
+                        <h3 style="margin-bottom: 15px; color: #22c55e;">📊 Fase de Lançamento</h3>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ Pré-lançamento com desenvolvimento em andamento</p>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ Meta Ano 1: <strong>130 usuários pagos</strong></p>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ Crescimento: <strong>20-30% ao mês</strong> após 6º mês</p>
+                        <p style="font-size: 14px;">✓ Retenção projetada: <strong>85%+</strong></p>
+                    </div>
+                    <div class="info-box">
+                        <h3 style="margin-bottom: 15px; color: #60a5fa;">🎯 Validação Inicial</h3>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ Pesquisa com <strong>200+ profissionais</strong></p>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ <strong>87% de interesse</strong> em plataforma acessível</p>
+                        <p style="font-size: 14px; margin-bottom: 10px;">✓ Lista de espera: <strong>50+ interessados</strong></p>
+                        <p style="font-size: 14px;">✓ Parcerias com <strong>3 PMEs</strong> locais</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Estratégia de Aquisição de Clientes</h2>
+                <p>CAC otimizado e canais validados</p>
+            </div>
+            <div class="slide-content">
+                <div class="grid-4" style="margin-bottom: 25px;">
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));">
+                        <div style="font-size: 32px; margin-bottom: 10px;">📱</div>
+                        <p style="font-weight: 600; margin-bottom: 5px; font-size: 14px;">Marketing Digital</p>
+                        <p style="font-size: 11px; opacity: 0.8; margin-bottom: 12px;">SEO + Conteúdo</p>
+                        <p style="font-size: 24px; font-weight: 800; color: #60a5fa;">40%</p>
+                    </div>
+                    <div class="metric" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22,
